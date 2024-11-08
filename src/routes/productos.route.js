@@ -23,10 +23,12 @@ route.post("/productos",
 )
 
 route.put("/productos/:id",
+    genericMiddleware.validateId(Producto),
     productosController.updateProducto
 )
 
 route.delete("/productos/:id",
+    genericMiddleware.validateId(Producto),
     productosController.deleteProducto
 )
 

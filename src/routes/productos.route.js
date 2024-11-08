@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const Producto = require('../Schemas/productosSchema');
-//const schemaValidator = require('../Schemas/schemaValidator');
+const schemaValidator = require('../Schemas/schemaValidator');
 
 const genericMiddleware = require('../middleware/generic.middleware');
 
@@ -19,6 +19,7 @@ route.get("/productos/:id",
 )
 
 route.post("/productos",
+    schemaValidator(Producto),
     productosController.createProducto
 )
 

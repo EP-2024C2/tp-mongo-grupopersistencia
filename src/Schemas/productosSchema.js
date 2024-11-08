@@ -4,22 +4,22 @@ const { Schema } = require('mongoose')
 const productoSchema = new mongoose.Schema({
   nombre: {
     type: Schema.Types.String,
-    required: true,
+    required: [true, 'El nombre es obligatorio'],
   },
   descripcion: {
     type: Schema.Types.String,
-    required: true,
+    required: [true, 'La descripción es obligatoria'],
   },
   precio: {
     type: Schema.Types.Decimal128,
-    required: true
+    required: [true, 'El precio es obligatorio'],
   },
   pathImg: {
     type: Schema.Types.String
   },
   componentes: [{
-    nombre: { type: Schema.Types.String, required: true },
-    descripcion: { type: Schema.Types.String },
+    nombre: { type: Schema.Types.String, required: [true, 'El nombre del componente es obligatorio']},
+    descripcion: { type: Schema.Types.String, required: [true, 'La descripción del componente es obligatoria'] },
   }]
 },
 {

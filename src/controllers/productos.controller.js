@@ -34,8 +34,13 @@ controller.updateProducto = updateProducto
 
 const deleteProducto = async (req,res) =>{
     const {id} = req.params
-    const producto = await Producto.findByIdAndDelete(id)
-    res.status(200).json({message: "Producto eliminado con éxito"})
+    try{
+        const producto = await Producto.findByIdAndDelete(id)
+        res.status(200).json({message: "Producto eliminado con éxito"})
+    } catch (error){
+        res.status(500).json({ error: "Error al eliminar el producto", details: error.message })
+    }
+    
 }
 
 controller.deleteProducto = deleteProducto

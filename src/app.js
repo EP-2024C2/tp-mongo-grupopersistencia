@@ -8,8 +8,8 @@ const app = express()
 app.use(express.json())
 
 app.use(routes.productosRoute)
-//app.use(routes.fabricantesRoute)
-//app.use(routes.componentesRoute)
+app.use(routes.fabricantesRoute)
+app.use(routes.componentesRoute)
 
 
 

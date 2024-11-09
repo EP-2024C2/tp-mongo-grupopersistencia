@@ -9,13 +9,6 @@ const getAllProductos = async (req,res) => {
 
 controller.getAllProductos = getAllProductos
 
-const createProducto = async (req,res) => {
-    const producto = await Producto.create(req.body)
-    res.status(201).json(producto)
-}
-
-controller.createProducto = createProducto
-
 const getProductoById = async (req,res) =>{
     const {id} = req.params
     const producto = await Producto.findById(id)
@@ -23,6 +16,13 @@ const getProductoById = async (req,res) =>{
 }
 
 controller.getProductoById = getProductoById
+
+const createProducto = async (req,res) => {
+    const producto = await Producto.create(req.body)
+    res.status(201).json(producto)
+}
+
+controller.createProducto = createProducto
 
 const updateProducto = async (req,res) =>{
     const {id} = req.params

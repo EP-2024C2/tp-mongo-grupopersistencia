@@ -1,35 +1,42 @@
 const {Router} = require('express');
-const fabricanteSchema = require('../Schemas/fabricanteSchema');
+const Fabricante = require('../Schemas/fabricanteSchema');
 const schemaValidator = require('../Schemas/schemaValidator');
+
 const genericMiddleware = require('../middleware/generic.middleware');
-const fabricantesControllers = require('../controllers/fabricantes.controller');
+
+const fabricantesController = require('../controllers/fabricantes.controller');
+//const productosController = require('../controllers/productos.controller')
+
 const route = Router();
 
-route.get('/fabricantes', fabricantesControllers.getAllFabricantes)
+route.get('/fabricantes', 
+    fabricantesController.getAllFabricantes
+)
 
 route.get('/fabricantes/:id', 
-    genericMiddleware.validateId(),
-    fabricantesControllers.getFabricanteById
+    genericMiddleware.validateId(Fabricante),
+    fabricantesController.getFabricanteById
     )
 
 route.post('/fabricantes', 
-    schemaValidator(fabricanteSchema),
-    fabricantesControllers.createFabricantes 
+    schemaValidator(Fabricante),
+    fabricantesController.createFabricante
 )
 
 route.put('/fabricantes/:id', 
-    genericMiddleware.validateId(),
-    fabricantesControllers.updateFabricantes
+    genericMiddleware.validateId(Fabricante),
+    fabricantesController.updateFabricante
     ) 
     
 route.delete('/fabricantes/:id',
-    genericMiddleware.validateId(),
-    fabricantesControllers.deleteById
+    genericMiddleware.validateId(Fabricante),
+    fabricantesController.deleteFabricante
     ) 
 
+/*
 route.get('/fabricantes/:id/productos', 
     genericMiddleware.validateId(),
-    fabricantesControllers.getProductosPorFabricante
-)
+    fabricantesController.getProductosPorFabricante
+)*/
 
 module.exports = route

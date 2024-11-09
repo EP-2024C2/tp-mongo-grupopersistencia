@@ -1,41 +1,51 @@
-//const {Componentes, Productos, Fabricantes} = require('')
-const fabricantesControllers = {}
-const genericMiddleware = require('../middleware/generic.middleware')
+const Fabricante = require('../Schemas/fabricanteSchema')
+const controller = {}
+const mongoose = require('../db/mongo.db').mongoose;
 
-//getAllFabricantes
+
 const getAllFabricantes = async (req, res) => {
-    
+    const fabricantes = await Fabricante.find({})
+    res.status(200).json(fabricantes)
 }
-controllerFabricantes.getAllFabricantes = getAllFabricantes
+controller.getAllFabricantes = getAllFabricantes
 
-//getFabricanteById
 const getFabricanteById = async (req,res) => {
-    
+    const {id} = req.params
+    const fabricante = await Fabricante.findById(id)
+    res.status(200).json(fabricante)
 }
-controllerFabricantes.getFabricanteById = getFabricanteById
+controller.getFabricanteById = getFabricanteById
 
-//create fabricantes
-const createFabricantes = async (req,res) => {
-    
+const createFabricante = async (req,res) => {
+    const fabricante = await Fabricante.create(req.body)
+    res.status(201).json(fabricante)
 }
-controllerFabricantes.createFabricantes = createFabricantes
+controller.createFabricante = createFabricante
 
-//updateFabricantes
-const updateFabricantes = async (req,res) => {
-    
+const updateFabricante = async (req,res) => {
+    const {id} = req.params
+    const fabricante = await Fabricante.findByIdAndUpdate(id, req.body, {new: true})
+    res.status(200).json(fabricante)
 }
-controllerFabricantes.updateFabricantes = updateFabricantes
+controller.updateFabricante = updateFabricante
 
-//deleteById
-const deleteById = async (req,res) => {
-    
+
+const deleteFabricante = async (req,res) => {
+    const {id} = req.params
+    try{
+        const fabricante = await Fabricante.findByIdAndDelete(id)
+        res.status(200).json({message: "Fabricante eliminado con éxito"})
+    } catch (error){
+        res.status(500).json({ error: "Error al eliminar el fabricante", details: error.message })
+    }
 }
-controllerFabricantes.deleteById = deleteById
+controller.deleteFabricante = deleteFabricante
 
+/*
 //getProductosPorFabricante
 const getProductosPorFabricante = async(req,res) =>{
    
 }
-controllerFabricantes.getProductosPorFabricante = getProductosPorFabricante
+controller.getProductosPorFabricante = getProductosPorFabricante*/
 
-module.exports = fabricantesControllers
+module.exports = controller

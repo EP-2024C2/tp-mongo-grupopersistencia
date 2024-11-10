@@ -1,6 +1,8 @@
 const { mongoose } = require('../db/mongo.db')
 const { Schema } = require('mongoose')
 
+const componenteSchema = require('./componenteSchema');
+
 const productoSchema = new mongoose.Schema({
   nombre: {
     type: Schema.Types.String,
@@ -17,10 +19,8 @@ const productoSchema = new mongoose.Schema({
   pathImg: {
     type: Schema.Types.String
   },
-  componentes: [{
-    nombre: { type: Schema.Types.String, required: [true, 'El nombre del componente es obligatorio']},
-    descripcion: { type: Schema.Types.String, required: [true, 'La descripción del componente es obligatoria'] },
-  }]
+  fabricantes: [{ type: Schema.Types.ObjectId, ref: 'Fabricante' }],
+  componentes: [componenteSchema], 
 },
 {
   collection: "productos",

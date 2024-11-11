@@ -14,6 +14,6 @@ app.use(routes.componentesRoute)
 
 
 app.listen(PORT, async() => {
-    console.log(`Aplicación iniciada en el puerto ${PORT} - http://localhost:${PORT}/`)
+    console.log(` \u{1F680} Aplicación iniciada en el puerto ${PORT} - http://localhost:${PORT}/`)
     await connectToDatabase();
 })

@@ -55,7 +55,6 @@ const getProductosByComponente = async (req,res) =>{
         res.status(500).json({ message: "Error al obtener productos", error: err });
       }
 }
-
 controller.getProductosByComponente = getProductosByComponente
 
 module.exports = controller

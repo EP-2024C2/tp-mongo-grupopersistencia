@@ -8,9 +8,9 @@ Este proyecto implementa una API rest desarrollada con Node.js y Mongo DB. Permi
 
 # Enfoques de relaciones en MongoDB
 
-## Relación incrustada:
+### Relación incrustada:
 
-## Relación referenciada:
+### Relación referenciada:
 
 # Tecnologías utilizadas
 
@@ -21,14 +21,14 @@ Este proyecto implementa una API rest desarrollada con Node.js y Mongo DB. Permi
 
 # Instalacion y ejecución de la API rest:
 
-## Requisitos previos:
+### Requisitos previos:
 
 - Node.js
 - npm (Node Package Manager)
 - Docker
 - Mongodb
 
-## Pasos para la ejecución:
+### Pasos para la ejecución:
 
 Ejecute los siguiente comandos para correr la API en la máquina local
 

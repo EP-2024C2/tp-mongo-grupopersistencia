@@ -33,10 +33,9 @@ route.delete('/fabricantes/:id',
     fabricantesController.deleteFabricante
     ) 
 
-/*
 route.get('/fabricantes/:id/productos', 
-    genericMiddleware.validateId(),
-    fabricantesController.getProductosPorFabricante
-)*/
+    genericMiddleware.validateId(Fabricante),
+    fabricantesController.getProductosByFabricante
+)
 
 module.exports = route

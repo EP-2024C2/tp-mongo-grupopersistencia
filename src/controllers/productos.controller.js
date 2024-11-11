@@ -123,7 +123,8 @@ const getFabricantesByProducto = async (req,res) => {
           nombre: 1,
           descripcion: 1,
           precio: 1,
-          fabricantes: 1
+          fabricantes: 1,
+          componentes: 1
         },
       },
     ])

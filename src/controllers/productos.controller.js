@@ -1,4 +1,6 @@
 const Producto = require("../Schemas/productosSchema")
+const Componente = require("../Schemas/componenteSchema")
+const Fabricante = require("../Schemas/fabricanteSchema")
 const controller = {}
 const mongoose = require("../db/mongo.db").mongoose;
 
@@ -44,5 +46,129 @@ const deleteProducto = async (req,res) =>{
 }
 
 controller.deleteProducto = deleteProducto
+
+const getComponentesByProducto = async (req,res) => {
+  const _id = new mongoose.Types.ObjectId(req.params.id)
+  try{
+    const producto = await Producto.aggregate([
+      {
+        $match: {_id}
+      },
+      {
+        $project: {
+          _id: 0,
+          nombre: 1,
+          descripcion: 1,
+          precio: 1,
+          componentes: 1
+        },
+      },
+    ])
+
+    res.status(200).json(producto)
+
+  }catch (err){
+    res.status(500).json({ message: "Error al obtener componentes", error: err });
+  }
+}
+
+controller.getComponentesByProducto = getComponentesByProducto
+
+const addComponentes = async (req,res) =>{
+    const { componenteIds } = req.body; 
+  
+  if (!Array.isArray(componenteIds) || componenteIds.length === 0) {
+    return res.status(400).json({ message: "Se debe proporcionar un array de IDs de componentes" });
+  }
+
+  try {
+    const producto = await Producto.findById(req.params.id);
+
+    const componentes = await Componente.find({ '_id': { $in: componenteIds } });
+    if (componentes.length !== componenteIds.length) {
+      return res.status(404).json({ message: "Uno o más componentes no encontrados" });
+    }
+
+    producto.componentes.push(...componentes); 
+
+    await producto.save();
+    
+    res.status(201).json(producto);
+  } catch (err) {
+    res.status(400).json({ message: "Error al asociar componentes al producto", error: err });
+  }
+
+}
+
+controller.addComponentes = addComponentes
+
+const getFabricantesByProducto = async (req,res) => {
+  const _id = new mongoose.Types.ObjectId(req.params.id)
+  try{
+    const producto = await Producto.aggregate([
+      {
+        $match: {_id}
+      },
+      { 
+        $lookup: {
+          from: 'fabricantes', 
+          localField: 'fabricantes', 
+          foreignField: '_id',  
+          as: 'fabricantes' 
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          nombre: 1,
+          descripcion: 1,
+          precio: 1,
+          fabricantes: 1
+        },
+      },
+    ])
+
+    res.status(200).json(producto)
+
+  }catch (err){
+    res.status(500).json({ message: "Error al obtener componentes", error: err });
+  }
+}
+
+controller.getFabricantesByProducto = getFabricantesByProducto
+
+const addFabricantesByProducto = async (req,res) =>{
+
+  try {
+    const { fabricanteIds } = req.body;
+  
+    if (!fabricanteIds || !Array.isArray(fabricanteIds)) {
+      return res.status(400).json({ message: 'El cuerpo debe contener un array de fabricantes' });
+    }
+
+    const producto = await Producto.findById(req.params.id);
+  
+    if (!producto) {
+      return res.status(404).json({ message: 'Producto no encontrado' });
+    }
+
+    const fabricantes = await Fabricante.find({ '_id': { $in: fabricanteIds } });
+  
+    if (fabricantes.length !== fabricanteIds.length) {
+      return res.status(404).json({ message: 'Algunos de los fabricantes no fueron encontrados' });
+    }
+
+    producto.fabricantes.push(...fabricantes); 
+
+    await producto.save();
+  
+    res.status(201).json(producto);  
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
+}
+
+controller.addFabricantesByProducto = addFabricantesByProducto
 
 module.exports = controller

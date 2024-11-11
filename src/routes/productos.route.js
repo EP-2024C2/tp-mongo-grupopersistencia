@@ -5,8 +5,6 @@ const schemaValidator = require('../Schemas/schemaValidator');
 const genericMiddleware = require('../middleware/generic.middleware');
 
 const productosController = require('../controllers/productos.controller');
-//const fabricantesController = require('../controllers/fabricantes.controller');
-//const componentesController = require('../controllers/componentes.controller')
 const route = Router();
 
 route.get("/productos",
@@ -33,5 +31,24 @@ route.delete("/productos/:id",
     productosController.deleteProducto
 )
 
+route.get("/productos/:id/componentes",
+    genericMiddleware.validateId(Producto),
+    productosController.getComponentesByProducto
+)
+
+route.post("/productos/:id/componentes",
+    genericMiddleware.validateId(Producto),
+    productosController.addComponentes
+)
+
+route.get("/productos/:id/fabricantes",
+    genericMiddleware.validateId(Producto),
+    productosController.getFabricantesByProducto
+)
+
+route.post("/productos/:id/fabricantes",
+    genericMiddleware.validateId(Producto),
+    productosController.addFabricantesByProducto
+)
 
 module.exports = route

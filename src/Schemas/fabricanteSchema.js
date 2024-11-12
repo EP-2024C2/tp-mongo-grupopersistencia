@@ -1,28 +1,32 @@
 const { mongoose } = require('../db/mongo.db')
 const { Schema } = require('mongoose')
 
-const fabricanteSchema = new mongoose.Schema({
-  nombre: {
-    type: Schema.Types.String,
-    required: true,
+const fabricanteSchema = new mongoose.Schema(
+  {
+    nombre: {
+      type: Schema.Types.String,
+      required: true,
+    },
+    direccion: {
+      type: Schema.Types.String,
+      required: true,
+    },
+    numeroContacto: {
+      type: Schema.Types.String,
+      required: true
+    },
+    pathImgPerfil: {
+      type: Schema.Types.String
+    },
+    productoId: [{ 
+      type: Schema.Types.ObjectId, 
+      ref: 'Producto' ,
+    }],
   },
-  direccion: {
-    type: Schema.Types.String,
-    required: true,
-  },
-  numeroContacto: {
-    type: Schema.Types.String,
-    required: true
-  },
-  pathImgPerfil: {
-    type: Schema.Types.String
-  },
-  productos: [{ type: Schema.Types.ObjectId, ref: 'Producto' }],
-},
-{
-  collection: "fabricantes",
-}
-)
+  {
+    collection: "fabricantes",
+  }
+);
 
 fabricanteSchema.set('toJSON', {
   virtuals: true,

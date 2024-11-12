@@ -10,8 +10,8 @@ const getAllFabricantes = async (req, res) => {
 controller.getAllFabricantes = getAllFabricantes
 
 const getFabricanteById = async (req,res) => {
-    const {id} = req.params
-    const fabricante = await Fabricante.findById(id)
+    const _id = req.params.id
+    const fabricante = await Fabricante.findById({_id})
     res.status(200).json(fabricante)
 }
 controller.getFabricanteById = getFabricanteById
@@ -42,33 +42,11 @@ const deleteFabricante = async (req,res) => {
 controller.deleteFabricante = deleteFabricante
 
 const getProductosByFabricante = async(req,res) =>{
-    const _id = new mongoose.Types.ObjectId(req.params.id)
+    const _id = req.params.id
     try{
-      const fabricante = await Fabricante.aggregate([
-        {
-          $match: {_id}
-        },
-        { 
-          $lookup: {
-            from: 'productos', 
-            localField: 'productos', 
-            foreignField: '_id',  
-            as: 'productos' 
-          }
-        },
-        {
-          $project: {
-            _id: 0,
-            nombre: 1,
-            direccion: 1,
-            numeroContacto: 1,
-            pathImgPerfil: 1,
-            productos: 1
-          },
-        },
-      ])
-  
-      res.status(200).json(fabricante)
+      
+      const fabricante = await Fabricante.findById({_id}).populate('productoId')
+      res.status(200).json(fabricante.productoId)
   
     }catch (err){
       res.status(500).json({ message: "Error al obtener productos", error: err });

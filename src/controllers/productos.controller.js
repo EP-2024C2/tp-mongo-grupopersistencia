@@ -1,11 +1,10 @@
 const Producto = require("../Schemas/productosSchema")
-const Componente = require("../Schemas/componenteSchema")
 const Fabricante = require("../Schemas/fabricanteSchema")
 const controller = {}
 const mongoose = require("../db/mongo.db").mongoose;
 
 const getAllProductos = async (req,res) => {
-    const productos = await Producto.find({})
+    const productos = await Producto.find({});
     res.status(200).json(productos)
 }
 
@@ -60,7 +59,7 @@ const getComponentesByProducto = async (req,res) => {
           nombre: 1,
           descripcion: 1,
           precio: 1,
-          componentes: 1
+          componentes: 1,
         },
       },
     ])
@@ -75,25 +74,16 @@ const getComponentesByProducto = async (req,res) => {
 controller.getComponentesByProducto = getComponentesByProducto
 
 const addComponentes = async (req,res) =>{
-    const { componenteIds } = req.body; 
-  
-  if (!Array.isArray(componenteIds) || componenteIds.length === 0) {
-    return res.status(400).json({ message: "Se debe proporcionar un array de IDs de componentes" });
-  }
-
+  const {id} = req.params
   try {
-    const producto = await Producto.findById(req.params.id);
+    const producto = await Producto.findByIdAndUpdate(
+      id,
+      {$push : {componentes: req.body}},
+      {new: true}
+    );
 
-    const componentes = await Componente.find({ '_id': { $in: componenteIds } });
-    if (componentes.length !== componenteIds.length) {
-      return res.status(404).json({ message: "Uno o más componentes no encontrados" });
-    }
-
-    producto.componentes.push(...componentes); 
-
-    await producto.save();
     
-    res.status(201).json(producto);
+    res.status(201).json(producto.componentes[producto.componentes.length - 1]);
   } catch (err) {
     res.status(400).json({ message: "Error al asociar componentes al producto", error: err });
   }
@@ -103,32 +93,9 @@ const addComponentes = async (req,res) =>{
 controller.addComponentes = addComponentes
 
 const getFabricantesByProducto = async (req,res) => {
-  const _id = new mongoose.Types.ObjectId(req.params.id)
-  try{
-    const producto = await Producto.aggregate([
-      {
-        $match: {_id}
-      },
-      { 
-        $lookup: {
-          from: 'fabricantes', 
-          localField: 'fabricantes', 
-          foreignField: '_id',  
-          as: 'fabricantes' 
-        }
-      },
-      {
-        $project: {
-          _id: 0,
-          nombre: 1,
-          descripcion: 1,
-          precio: 1,
-          fabricantes: 1,
-          componentes: 1
-        },
-      },
-    ])
 
+  try{
+    const producto = await Producto.findById(req.params.id).populate('fabricanteId');
     res.status(200).json(producto)
 
   }catch (err){
@@ -141,29 +108,18 @@ controller.getFabricantesByProducto = getFabricantesByProducto
 const addFabricantesByProducto = async (req,res) =>{
 
   try {
+    const { id } = req.params;
     const { fabricanteIds } = req.body;
-  
-    if (!fabricanteIds || !Array.isArray(fabricanteIds)) {
-      return res.status(400).json({ message: 'El cuerpo debe contener un array de fabricantes' });
+    const fabricantesExistentes = await Fabricante.find({ '_id': { $in: fabricanteIds } });
+    if (fabricantesExistentes.length !== fabricanteIds.length) {
+      return res.status(404).json({ message: "Uno o más fabricantes no existen" });
     }
-
-    const producto = await Producto.findById(req.params.id);
-  
-    if (!producto) {
-      return res.status(404).json({ message: 'Producto no encontrado' });
-    }
-
-    const fabricantes = await Fabricante.find({ '_id': { $in: fabricanteIds } });
-  
-    if (fabricantes.length !== fabricanteIds.length) {
-      return res.status(404).json({ message: 'Algunos de los fabricantes no fueron encontrados' });
-    }
-
-    producto.fabricantes.push(...fabricantes); 
-
-    await producto.save();
-  
-    res.status(201).json(producto);  
+    const updatedProducto = await Producto.findOneAndUpdate(
+      { _id: id },  
+      { $addToSet: { fabricanteId: { $each: fabricanteIds } } },  
+      { new: true }  
+    );
+    res.status(201).json(updatedProducto);  
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

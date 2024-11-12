@@ -9,7 +9,6 @@ app.use(express.json())
 
 app.use(routes.productosRoute)
 app.use(routes.fabricantesRoute)
-app.use(routes.componentesRoute)
 
 
 

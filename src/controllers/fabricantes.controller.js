@@ -46,7 +46,7 @@ const getProductosByFabricante = async(req,res) =>{
     try{
       
       const fabricante = await Fabricante.findById({_id}).populate('productoId')
-      res.status(200).json(fabricante.productoId)
+      res.status(200).json(fabricante)
   
     }catch (err){
       res.status(500).json({ message: "Error al obtener productos", error: err });

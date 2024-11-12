@@ -93,13 +93,37 @@ const addComponentes = async (req,res) =>{
 controller.addComponentes = addComponentes
 
 const getFabricantesByProducto = async (req,res) => {
-
+  const _id = new mongoose.Types.ObjectId(req.params.id)
   try{
-    const producto = await Producto.findById(req.params.id).populate('fabricanteId');
+    const producto = await Producto.aggregate([
+      {
+        $match: {_id}
+      },
+      {
+        $lookup: {
+          from: 'fabricantes',
+          localField: "_id",
+          foreignField: "productoId",
+          as: "fabricantes"
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          nombre: 1,
+          descripcion: 1,
+          precio: 1,
+          "fabricantes._id": 1,
+          "fabricantes.nombre": 1,
+          "fabricantes.direccion":1,
+          "fabricantes.numeroContacto": 1,
+        },
+      },
+    ])
     res.status(200).json(producto)
 
   }catch (err){
-    res.status(500).json({ message: "Error al obtener componentes", error: err });
+    res.status(500).json({ message: "Error al obtener fabricantes", error: err });
   }
 }
 

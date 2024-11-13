@@ -18,7 +18,7 @@ const fabricanteSchema = new mongoose.Schema(
     pathImgPerfil: {
       type: Schema.Types.String
     },
-    productoId: [{ 
+    productoId: [{  
       type: Schema.Types.ObjectId, 
       ref: 'Producto' ,
     }],

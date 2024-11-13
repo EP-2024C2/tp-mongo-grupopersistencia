@@ -10,7 +10,16 @@ Este proyecto implementa una API rest desarrollada con Node.js y Mongo DB. Permi
 
 ### Relación incrustada:
 
+Utilizamos este tipo de relacion para los componentes dentro del esquema de producto, este diseño pierde la capacidad de poder manejar los endpoints de componentes de una manera independiente, esto puede generar una pérdida frente a acceso directo de los mismos.
+Si el documento crece significativamente puede afectar al rendimiento de las consultas.
+
+![Incrustada](./img/Incrustada.png)
+
 ### Relación referenciada:
+
+Nos parecio adecuado utilizar este tipo de relacion ya que nos permite gestionar los datos de manera más eficiente evitando la duplicación inncesaria. Puede ofrecer a futuro beneficios en términos de escalabilidad y rendimiento.
+Se logra mantener una consistencia entre las referencias y los documentos.
+![Referenciada](./img/Referenciada.png)
 
 # Tecnologías utilizadas
 
@@ -33,20 +42,29 @@ Este proyecto implementa una API rest desarrollada con Node.js y Mongo DB. Permi
 Ejecute los siguiente comandos para correr la API en la máquina local
 
 - Clonar el repositorio remoto
+
   `https://github.com/EP-2024C2/tp-mongo-grupopersistencia.git`
 
 - Instalar dependencias dentro del directorio del proyecto
+
   `npm i`
 
+- Dentro del archivo package.json incluir el siguiente script
+
+  `"start": "node src/app.js",`
+
 - Inicializar la API
+
   `npm start`
 
 - Si desea usar un entorno de desarrollo como nodemon, debe inicializar la API con
+
   `npm run dev`
 
 ## Modelo Relacional
 
 El proyecto presenta el siguiente diagrama de entidad-relación (DER)
+![DER](./img/DER.png)
 
 ## Desarrolladores
 

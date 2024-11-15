@@ -19,6 +19,7 @@ Si el documento crece significativamente puede afectar al rendimiento de las con
 
 Nos parecio adecuado utilizar este tipo de relacion ya que nos permite gestionar los datos de manera más eficiente evitando la duplicación inncesaria. Puede ofrecer a futuro beneficios en términos de escalabilidad y rendimiento.
 Se logra mantener una consistencia entre las referencias y los documentos.
+
 ![Referenciada](./img/Referenciada.png)
 
 # Tecnologías utilizadas

@@ -28,6 +28,7 @@ Se logra mantener una consistencia entre las referencias y los documentos.
 - Node.js
 - Express
 - Nodemon
+- Docker
 
 # Instalacion y ejecución de la API rest:
 

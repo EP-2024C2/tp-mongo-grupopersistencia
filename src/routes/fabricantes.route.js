@@ -5,7 +5,6 @@ const schemaValidator = require('../Schemas/schemaValidator');
 const genericMiddleware = require('../middleware/generic.middleware');
 
 const fabricantesController = require('../controllers/fabricantes.controller');
-//const productosController = require('../controllers/productos.controller')
 
 const route = Router();
 

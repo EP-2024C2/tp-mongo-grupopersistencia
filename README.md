@@ -50,10 +50,6 @@ Ejecute los siguiente comandos para correr la API en la máquina local
 
   `npm i`
 
-- Dentro del archivo package.json incluir el siguiente script
-
-  `"start": "node src/app.js",`
-
 - Inicializar la API
 
   `npm start`
@@ -61,6 +57,10 @@ Ejecute los siguiente comandos para correr la API en la máquina local
 - Si desea usar un entorno de desarrollo como nodemon, debe inicializar la API con
 
   `npm run dev`
+
+- Si desea detener los contenedores e imagenes de docker debe ejecutar el comando
+
+  `docker compose down`
 
 ## Modelo Relacional
 

@@ -1,5 +1,6 @@
-const { mongoose } = require('../db/mongo.db')
-const { Schema } = require('mongoose')
+//const { mongoose } = require('../db/mongo.db')
+const mongoose = require('mongoose');
+const { Schema } = require('mongoose');
 
 const fabricanteSchema = new mongoose.Schema(
   {

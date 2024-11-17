@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
-const initData = require('../dataInit/data')
 const MONGO_URL = 
   process.env.MONGO_URL ?? 
   "mongodb://admin:admin1234@localhost:27017/producto?authSource=admin";
+
+const initData = require('../init/data')
 
 async function connectToDatabase () {
   try {

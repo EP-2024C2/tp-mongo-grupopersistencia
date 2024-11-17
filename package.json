@@ -4,11 +4,11 @@
   "description": "Trabajo Practico M to N - -Grupo xxxxxxxxx",
   "main": "index.js",
   "scripts": {
-    "docker:build": "docker-compose build", 
-    "docker:up": "docker-compose up -d", 
-    "docker:down": "docker-compose down", 
-    "start": "npm run docker:build && npm run docker:up && node src/app.js", 
-    "start:dev": "npm riun docker:build && npm run docker:up && nodemon ./src/app.js",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "start": "npm run docker:build && npm run docker:up && node src/app.js",
+    "dev": "npm run docker:build && npm run docker:up && nodemon ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

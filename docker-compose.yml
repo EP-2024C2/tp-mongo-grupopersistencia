@@ -20,6 +20,7 @@ services:
       ME_CONFIG_BASICAUTH: "false"
 
   apiimage1:
+    build: .
     image: api-image:1.0.0
     ports:
       - 4500:3001 
@@ -30,6 +31,7 @@ services:
       - mongodb
 
   apiimage2:
+    build: .
     image: api-image:1.0.0
     ports:
       - 4550:3001 

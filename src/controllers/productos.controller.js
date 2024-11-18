@@ -109,7 +109,7 @@ const getFabricantesByProducto = async (req,res) => {
       },
       {
         $project: {
-          _id: 0,
+          _id: 1,
           nombre: 1,
           descripcion: 1,
           precio: 1,
@@ -138,11 +138,18 @@ const addFabricantesByProducto = async (req,res) =>{
     if (fabricantesExistentes.length !== fabricanteIds.length) {
       return res.status(404).json({ message: "Uno o más fabricantes no existen" });
     }
+    //Actualizar el producto con los fabricantes dados
     const updatedProducto = await Producto.findOneAndUpdate(
       { _id: id },  
       { $addToSet: { fabricanteId: { $each: fabricanteIds } } },  
       { new: true }  
     );
+    //Agrego el producto al fabricante
+    await Fabricante.updateMany(
+      { '_id': { $in: fabricanteIds } },
+      { $addToSet: { productoId: id } } 
+    );
+
     res.status(201).json(updatedProducto);  
   } catch (error) {
     res.status(500).json({ message: error.message });

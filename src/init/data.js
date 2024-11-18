@@ -32,7 +32,7 @@ const initData = async() => {
             pathImgPerfil: "images/fabricantes/lenovo.jpg",
             },
         ]);
-        console.log('Fabricantes creados:', fabricantes);
+        console.log('Fabricantes creados', fabricantes);
     
         const productos = await Producto.insertMany([
             {
@@ -87,7 +87,7 @@ const initData = async() => {
             ],
             },
         ]);
-        console.log('Productos creados:', productos);
+        console.log('Productos creados', productos);
     
         for (const producto of productos) {
             await Fabricante.findByIdAndUpdate(producto.fabricanteId, {

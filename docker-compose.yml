@@ -23,10 +23,10 @@ services:
     build: .
     image: api-image:1.0.0
     ports:
-      - 4500:3001 
+      - 4500:3001
     environment:
-      PORT: 3001
-      MONGO_URL: "mongodb://admin:admin1234@mongodb:27017/producto?authSource=admin"
+      PORT: ${PORT}
+      MONGO_URL: ${MONGO_URL}
     depends_on:
       - mongodb
 
@@ -34,9 +34,9 @@ services:
     build: .
     image: api-image:1.0.0
     ports:
-      - 4550:3001 
+      - 4550:3001
     environment:
-      PORT: 3001
-      MONGO_URL: "mongodb://admin:admin1234@mongodb:27017/producto?authSource=admin"
+      PORT: ${PORT}
+      MONGO_URL: ${MONGO_URL}
     depends_on:
       - mongodb

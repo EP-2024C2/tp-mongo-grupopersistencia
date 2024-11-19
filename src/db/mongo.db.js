@@ -1,8 +1,5 @@
-require('dotenv').config();
 const mongoose = require('mongoose');
-
-const MONGO_URL = 
-  process.env.MONGO_URL ?? "mongodb://admin:admin1234@localhost:27017/producto?authSource=admin";
+const MONGO_URL = process.env.MONGO_URL ?? "mongodb://admin:admin1234@localhost:27017/producto?authSource=admin";
 
 const initData = require('../init/data')
 

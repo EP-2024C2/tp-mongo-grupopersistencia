@@ -1,5 +1,4 @@
 node_modules
-.env
 
 # Ignore database files
 mongo_data

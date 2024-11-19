@@ -30,13 +30,3 @@ services:
     depends_on:
       - mongodb
 
-  apiimage2:
-    build: .
-    image: api-image:1.0.0
-    ports:
-      - 4550:3001
-    environment:
-      PORT: 3001
-      MONGO_URL: mongodb://admin:admin1234@mongodb:27017/producto?authSource=admin
-    depends_on:
-      - mongodb

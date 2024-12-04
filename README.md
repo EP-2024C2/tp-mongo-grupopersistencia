@@ -71,8 +71,5 @@ El proyecto presenta el siguiente diagrama de entidad-relación (DER)
 ## Desarrolladores
 
 - Albornoz Elizabeth
-- Britez Juan Manuel
 - Chebeste Alexis
-- Díaz Gonzalo
-- Galdin Santino
 - Gómez Maximiliano
